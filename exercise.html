@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+	<div id = "container" style = "border: 2px solid black; width:500px; height:200px">
+
+		<h2> This is a phrase </h2>
+		<button type="submit" id="boton"> Refresh </button>
+	</div>
+	<form>
+
+		<input type ="text" id="palabra">
+		<input type ="submit" id ="hiddensubmit" style="display:none;"/>
+
+	</form>
+
+	<a onclick="link_toggle()" class="linktoggle active" href="#"> Hide all current phrases </a>
+
+	<ul id="list">
+
+	</ul>
+
+	<script>
+		var phrases = ['I like pie','I like to play games','eje saludos']
+
+		function populate(){
+			$("#list").children().remove()
+			for(var i = 0; i<phrases.length;i++){
+				$("#list").append("<li id=mark"+i+">"+phrases[i]+ "<span onclick=remove('mark"+i+"')>   X</span></li>")
+			}
+		}
+
+		function link_toggle(){
+
+			$(".linktoggle").on('click',function(event){
+
+				var currentElement = $(event.currentTarget);
+				
+				if($(currentElement).hasClass("active")){
+
+					$("#list").hide()
+					currentElement.removeClass('active')
+					currentElement.text("Show all current phrases")
+				}
+				else {
+
+					$("#list").show()
+					currentElement.addClass("active")
+					currentElement.text("Hide all current phrases")
+				}
+					
+			})
+		}
+
+		function remove(id){
+
+			var index = parseInt(id.replace("mark",""))
+			phrases.splice(index,1)
+			console.log(phrases)
+			$(id).parent().remove()
+		}
+
+		populate()
+
+		$("form").on('submit',function(event){
+
+		
+			var value = $('#palabra').val()
+
+			if(value != ""){
+
+				event.preventDefault();
+		
+				phrases.push(value)
+				populate()
+				console.log(phrases)
+				$("#palabra").val("")
+			}
+
+		})
+
+		$("#boton").on('click',function(){
+
+			
+			$('#container h2').html('<h2>'+phrases[Math.floor((Math.random() * (phrases.length))+ 0)] + '</h2>')
+		});
+		
+	</script>
+
+	
+
+</body>
+</html>
