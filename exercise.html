@@ -28,7 +28,7 @@
 		function populate(){
 			$("#list").children().remove()
 			for(var i = 0; i<phrases.length;i++){
-				$("#list").append("<li id=mark"+i+">"+phrases[i]+ "<span onclick=remove('mark"+i+"')>   X</span></li>")
+				$("#list").append("<li>"+phrases[i]+ "<span id=mark" + i + ">   X</span></li>")
 			}
 		}
 
@@ -53,13 +53,19 @@
 					
 			})
 		}
+		
+		
+		$(document).on('click', "span", function(){
+
+			var a = $(this).attr('id')
+			$(this).parent().remove()
+		});
 
 		function remove(id){
 
 			var index = parseInt(id.replace("mark",""))
-			phrases.splice(index,1)
-			console.log(phrases)
-			$(id).parent().remove()
+			phrases.splice(1,1)
+			$(id).remove()
 		}
 
 		populate()
